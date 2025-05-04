@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShindoZk | Portfólio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        'dark-bg': '#181818',
+                        'dark-card': '#222222',
+                        'dark-hover': '#2a2a2a',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    backdropBlur: {
+                        'xl2': '30px',
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .glass {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        
+        .glass-card {
+            background: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .glass-hover:hover {
+            background: rgba(50, 50, 50, 0.7);
+        }
+        
+        .card-profile {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .profile-avatar {
+            border: 4px solid var(--bg-color);
+            transition: border-color 0.3s;
+            position: relative;
+            margin-top: -60px;
+        }
+        
+        :root {
+            --bg-color: #181818;
+        }
+        
+        .dark:root {
+            --bg-color: #181818;
+        }
+        
+        .transparent:root {
+            --bg-color: transparent;
+        }
+        
+        .profile-avatar {
+            border-color: var(--bg-color);
+        }
+        
+        .transparent .profile-avatar {
+            border-color: rgba(20, 20, 20, 0.7);
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.35em 0.65em;
+            font-weight: 600;
+            font-size: 0.75em;
+            line-height: 1;
+            border-radius: 9999px;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            transition: all 0.3s ease;
+        }
+        
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(30, 30, 30, 0.2);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(93, 92, 222, 0.7);
+            border-radius: 8px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(93, 92, 222, 0.9);
+        }
+        
+        /* Background animation for transparent theme */
+        .bg-animation {
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease-in-out;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body class="bg-white dark:bg-dark-bg min-h-screen">
+    <!-- Background animation for transparent theme (hidden by default) -->
+    <div id="bg-animation" class="bg-animation hidden opacity-70" style="background-image: url('https://iili.io/3wmLtEl.gif')"></div>
+    
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-10 dark:text-white py-4 w-full transition-all duration-300 dark:bg-dark-bg" id="navbar">
+        <div class="container mx-auto px-4 md:px-6 flex justify-between items-center">
+            <div class="text-xl font-bold flex items-center">
+                <span class="text-primary mr-2"></span>ShindoZk
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="rounded-full p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-dark-hover transition-colors">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 md:px-6 py-8">
+        <!-- Profile Card (Discord Style) -->
+        <section class="mb-12 opacity-0 animate-fadeIn">
+            <div class="card-profile dark:bg-dark-card shadow-lg max-w-4xl mx-auto">
+                <!-- Banner -->
+                <div class="h-32 sm:h-48 bg-gradient-to-r from-primary to-purple-600 relative">
+                    <img src="https://iili.io/3wpW2Mx.jpg" alt="Banner" class="w-full h-full object-cover">
+                </div>
+                
+                <!-- Profile Content -->
+                <div class="p-5 sm:p-6 relative">
+                    <!-- Avatar -->
+                    <div class="flex flex-col sm:flex-row">
+                        <div class="flex-shrink-0">
+                            <img src="https://iili.io/3wp9R2f.png" alt="ShindoZk" class="profile-avatar w-24 h-24 rounded-full object-cover">
+                        </div>
+                        
+                        <div class="mt-4 sm:mt-0 sm:ml-6">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between">
+                                <h1 class="text-xl sm:text-2xl font-bold dark:text-white">ShindoZk</h1>
+                                <div class="mt-2 sm:mt-0">
+                                    <span class="badge bg-primary text-white">
+                                        <i class="fa-solid fa-code mr-1"></i> Desenvolvedor
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <p class="mt-2 text-gray-600 dark:text-gray-300 text-sm">
+                                Desenvolvedor apaixonado por criar soluções inovadoras e interfaces intuitivas. 
+                                Especialista em desenvolvimento web, APIs, banco de dados e sempre em busca de aprender novas tecnologias.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Skills and Links -->
+                    <div class="mt-6 border-t dark:border-gray-700 pt-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Skills -->
+                            <div>
+                                <h3 class="text-lg font-semibold dark:text-white mb-3">
+                                    <i class="fa-solid fa-laptop-code mr-2 text-primary"></i>Habilidades
+                                </h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">HTML5</span>
+                                    <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">CSS3</span>
+                                    <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">JavaScript</span>
+                                    <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">Node.js</span>
+                                    <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">Python</span>
+                                    <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">UI/UX</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Links -->
+                            <div>
+                                <h3 class="text-lg font-semibold dark:text-white mb-3">
+                                    <i class="fa-solid fa-link mr-2 text-primary"></i>Links
+                                </h3>
+                                <div class="flex flex-wrap gap-3">
+                                    <a href="https://github.com/shindozk" target="_blank" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">
+                                        <i class="fa-brands fa-github text-2xl"></i>
+                                    </a>
+                                    <a href="https://linkedin.com/shindozk" target="_blank" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">
+                                        <i class="fa-brands fa-linkedin text-2xl"></i>
+                                    </a>
+                                    <a href="https://x.com/shindozk" target="_blank" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">
+                                        <i class="fa-brands fa-twitter text-2xl"></i>
+                                    </a>
+                                    <a href="mailto:otakuzintv@gmail.com" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">
+                                        <i class="fa-solid fa-envelope text-2xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section class="mb-16">
+            <div class="flex justify-between items-center mb-8 opacity-0 animate-fadeIn delay-1">
+                <h2 class="text-2xl font-bold dark:text-white">
+                    <i class="fa-solid fa-folder-open text-primary mr-2"></i>Projetos
+                </h2>
+                
+                <div class="flex items-center space-x-2">
+                    <label for="show-projects" class="text-sm font-medium dark:text-gray-300">Mostrar:</label>
+                    <select id="show-projects" class="bg-white dark:bg-dark-card border border-gray-300 dark:border-gray-700 rounded-md text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option value="all" selected>Todos</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1 -->
+                <div class="project-card dark:bg-dark-card rounded-xl shadow-lg overflow-hidden opacity-0 animate-fadeIn delay-1">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://iili.io/3NdVGbS.png" alt="Kandaraku" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-lg font-semibold dark:text-white">Kandaraku</h3>
+                            <span class="badge bg-primary/10 text-primary">Web</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            Kandaraku é um banco de dados para animes, onde cada usuário pode adicionar, editar e remover as informações de cada anime,
+                            além de possuir uma API para que outros desenvolvedores possam utilizar as informações do banco de dados.
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">Nuxt.js</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">React</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">MongoDB</span>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-solid fa-link mr-1"></i> Demo
+                            </a>
+                            <a href="https://github.com/shindozk/Kandaraku-Website-API-Anime-Manga" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-brands fa-github mr-1"></i> Repositório
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card dark:bg-dark-card rounded-xl shadow-lg overflow-hidden opacity-0 animate-fadeIn delay-2">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://iili.io/3N232Wb.png" alt="Huukasu" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-lg font-semibold dark:text-white">Huukasu</h3>
+                            <span class="badge bg-purple-500/10 text-purple-500">Web</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            Um banco de dados para imagens de animes com ferramentas de IA, onde cada usuário pode postar suas
+                            imagens ou gerar imagens com uma IA, podendo até futuramente monetizar suas artes.
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">HTML5</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">TailwindCSS</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">MongoDB</span>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-solid fa-link mr-1"></i> Demo
+                            </a>
+                            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-brands fa-github mr-1"></i> Repositório
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card dark:bg-dark-card rounded-xl shadow-lg overflow-hidden opacity-0 animate-fadeIn delay-3">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://iili.io/3N2Nduf.png" alt="Yoruka" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-lg font-semibold dark:text-white">Yoruka</h3>
+                            <span class="badge bg-green-500/10 text-green-500">Bot App</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            Um bot para o Discord de música, onde você ouvir a sua música quando e onde quiser, usando a biblioteca de música Yukufy (Uma lib criada por mim)
+                            vocẽ pode pesquisar e ouvir músicas do Spotify ou SoundCloud, com playlists, Lo-Fi Radio 24/7, rank de usúarios, servidores, entre outros.
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">Node.js</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">MongoDB</span>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-solid fa-link mr-1"></i> Demo
+                            </a>
+                            <a href="https://github.com/shindozk/yorukawebsite" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-brands fa-github mr-1"></i> Repositório
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card dark:bg-dark-card rounded-xl shadow-lg overflow-hidden opacity-0 animate-fadeIn delay-1">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://iili.io/3N3lrqG.png" alt="KumoWave-Lofi" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-lg font-semibold dark:text-white">KumoWave-Lofi</h3>
+                            <span class="badge bg-blue-500/10 text-blue-500">Web</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            Um site de streaming de música Lo-Fi, onde você pode ouvir músicas Lo-Fi 24/7, com playlists (em breve), entre outros.
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">HTML5</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">TailwindCSS</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">Node.js</span>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <a href="https://kumowave-lofi.onrender.com/" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-solid fa-link mr-1"></i> Demo
+                            </a>
+                            <a href="https://github.com/shindozk/KumoWave-Lofi" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-brands fa-github mr-1"></i> Repositório
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card dark:bg-dark-card rounded-xl shadow-lg overflow-hidden opacity-0 animate-fadeIn delay-2">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://i.imgur.com/SU7QypZ.png" alt="Shiunku" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-lg font-semibold dark:text-white">Shiunku (Skyport)</h3>
+                            <span class="badge bg-amber-500/10 text-amber-500">Web/Dashboard</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            Um Dashboard de hospedagem para VPS, onde você pode hospedar servidores de Node.js, Python, VPS, Lavalink, Minecraft, entre outros.
+                            Você pode gerenciar sua hospedagem com o nosso painel de controle, com um design moderno e responsivo. (requerer Docker)
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">HTML5</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">CSS3</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">JavaScript</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">Docker</span>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-solid fa-link mr-1"></i> Demo
+                            </a>
+                            <a href="https://github.com/shindozk/Shiunku" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-brands fa-github mr-1"></i> Repositório
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="project-card dark:bg-dark-card rounded-xl shadow-lg overflow-hidden opacity-0 animate-fadeIn delay-3">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://iili.io/3N3yNmg.png" alt="Suyumi.AI" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-lg font-semibold dark:text-white">Suyumi.AI</h3>
+                            <span class="badge bg-pink-500/10 text-pink-500">Bot App</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            Um bot para o Discord de IA, onde você pode gerar imagens com IA, criar histórias, tirar dúvidas, conversar pelo canal de voz ou chat, entre outros.
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">Node.js</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">MongoDB</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">Gemini API</span>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-solid fa-link mr-1"></i> Demo
+                            </a>
+                            <a href="https://github.com/shindozk/SuyumiAI" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-brands fa-github mr-1"></i> Repositório
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 7 -->
+                <div class="project-card dark:bg-dark-card rounded-xl shadow-lg overflow-hidden opacity-0 animate-fadeIn delay-3">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://iili.io/3NFxxI4.png" alt="Yushiko" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-lg font-semibold dark:text-white">Yushiko</h3>
+                            <span class="badge bg-pink-500/10 text-pink-500">Bot App</span>
+                        </div>
+                        <p class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            Um bot para o Discord para ensinar japonẽs do básico ao avançado, com um sistema de rank de estudos, metas de usúario,
+                            com IA de ensino, onde você pode aprender gratuitamente, e estudar em qualquer lugar e a qualquer hora.
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">Node.js</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">MongoDB</span>
+                            <span class="badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">Gemini API</span>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-solid fa-link mr-1"></i> Demo
+                            </a>
+                            <a href="#" class="text-primary hover:text-primary/80 text-sm font-medium">
+                                <i class="fa-brands fa-github mr-1"></i> Repositório
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="py-8 border-t dark:border-gray-800">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="text-xl font-bold dark:text-white">
+                        <span class="text-primary">Shindo</span>Zk
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        &copy; 2025 ShindoZk. Todos os direitos reservados.
+                    </p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+                        <i class="fa-brands fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+                        <i class="fa-brands fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+                        <i class="fa-brands fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+                        <i class="fa-solid fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Selecionar elementos do DOM
+            const themeToggle = document.getElementById('theme-toggle');
+            const html = document.documentElement;
+            const navbar = document.getElementById('navbar');
+            const bgAnimation = document.getElementById('bg-animation');
+            const projectsGrid = document.getElementById('projects-grid');
+            const showProjectsSelect = document.getElementById('show-projects');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            // Definir temas
+            const themes = {
+                dark: {
+                    icon: 'fa-sun',
+                    class: 'dark',
+                    name: 'Escuro'
+                },
+                transparent: {
+                    icon: 'fa-moon',
+                    class: 'transparent',
+                    name: 'Transparente'
+                }
+            };
+            
+            // Iniciar com tema escuro (dark) por padrão
+            let currentTheme = 'dark';
+            
+            // Aplicar animações nos elementos quando a página carregar
+            setTimeout(() => {
+                document.querySelectorAll('.animate-fadeIn').forEach(el => {
+                    el.classList.remove('opacity-0');
+                });
+            }, 100);
+            
+            // Função para alternar entre temas
+            function toggleTheme() {
+                const nextTheme = currentTheme === 'dark' ? 'transparent' : 'dark';
+                
+                // Remover classes do tema atual
+                html.classList.remove(themes[currentTheme].class);
+                
+                // Adicionar classes do próximo tema
+                html.classList.add(themes[nextTheme].class);
+                
+                // Atualizar ícone do botão
+                themeToggle.innerHTML = `<i class="fa-solid ${themes[nextTheme].icon}"></i>`;
+                
+                // Atualizar navbar para tema transparente
+                if (nextTheme === 'transparent') {
+                    navbar.classList.remove('dark:bg-dark-bg');
+                    navbar.classList.add('glass');
+                    bgAnimation.classList.remove('hidden');
+                    
+                    // Atualizar cards para tema transparente
+                    document.querySelectorAll('.card-profile, .project-card').forEach(card => {
+                        card.classList.remove('dark:bg-dark-card');
+                        card.classList.add('glass-card');
+                    });
+                } else {
+                    navbar.classList.add('dark:bg-dark-bg');
+                    navbar.classList.remove('glass');
+                    bgAnimation.classList.add('hidden');
+                    
+                    // Atualizar cards para tema escuro
+                    document.querySelectorAll('.card-profile, .project-card').forEach(card => {
+                        card.classList.add('dark:bg-dark-card');
+                        card.classList.remove('glass-card');
+                    });
+                }
+                
+                currentTheme = nextTheme;
+            }
+            
+            // Adicionar evento de clique ao botão de alternância de tema
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            // Background images para o tema transparente (alternam a cada 10 segundos)
+            const backgroundImages = [
+                'https://iili.io/3wmLtEl.gif',
+            ];
+            
+            let currentBgIndex = 0;
+            
+            // Função para alternar a imagem de fundo
+            function changeBackgroundImage() {
+                currentBgIndex = (currentBgIndex + 1) % backgroundImages.length;
+                bgAnimation.style.backgroundImage = `url('${backgroundImages[currentBgIndex]}')`;
+            }
+            
+            // Definir intervalo para alternar a imagem de fundo a cada 10 segundos
+            setInterval(changeBackgroundImage, 90000);
+            
+            // Detectar modo escuro do sistema
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            // Atualizar tema quando o modo escuro do sistema mudar
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                if (currentTheme === 'dark') {
+                    if (event.matches) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                }
+            });
+            
+            // Função para filtrar projetos
+            function filterProjects() {
+                const value = showProjectsSelect.value;
+                let maxProjects = projectCards.length;
+                
+                if (value !== 'all') {
+                    maxProjects = parseInt(value);
+                }
+                
+                projectCards.forEach((card, index) => {
+                    if (index < maxProjects) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Adicionar evento de alteração ao seletor de projetos
+            showProjectsSelect.addEventListener('change', filterProjects);
+            
+            // Filtrar projetos ao carregar a página
+            filterProjects();
+        });
+    </script>
+</body>
+</html>
